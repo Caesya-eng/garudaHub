@@ -6,8 +6,7 @@
 <div class="card shadow-sm mb-4">
     <div class="card-body">
         <div class="d-flex justify-content-between align-items-center mb-2">
-            <h3 class="mb-0">{{ $project->title }}</h3>
-
+            <h3 class="mb-0">{{ $project->title }} <small class="text-muted fs-6">(Verified)</small></h3>
             <div>
                 <span class="badge bg-warning text-dark me-1">
                     ★ {{ $project->ratings->count() ? number_format($project->ratings->avg('score'), 1) : 'Belum ada' }} / 5
