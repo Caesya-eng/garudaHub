@@ -1,0 +1,8 @@
+[33md2e87f2[m[33m ([m[1;36mHEAD -> [m[1;32mcaesya[m[33m)[m feat: create blade views and complete crud user interface
+[33m5085334[m feat: refactor project and bid crud logic into mvc controllers and routes
+[33m872eda7[m feat: implement eloquent models and table relationships
+[33m22edb5e[m feat: create relational database migrations for users, projects, and bids
+[33mea669c6[m fix: move laravel files to repository root
+[33m69f119a[m chore: initialize laravel framework and database configuration
+[33m9165d14[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m Rilis disetujui: arsipkan dokumen fase prototype
+[33mb7ba60d[m Dokumentasi pengguna dan dokumen publik (README, LICENSE, SECURITY, CONTRIBUTING, CHANGELOG)

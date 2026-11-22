@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
-use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
-
     public function index()
     {
         $projects = Project::with(['user', 'bids'])->latest()->get();
@@ -17,24 +16,26 @@ class ProjectController extends Controller
 
     public function create()
     {
-        $clients = User::where('role', 'client')->get();
-        if ($clients->isEmpty()) {
-            $clients = User::all();
-        }
-        return view('projects.create', compact('clients'));
+        return view('projects.create');
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'user_id'     => 'required|exists:users,id',
             'title'       => 'required|string|max:255',
             'description' => 'required|string',
             'budget'      => 'required|numeric|min:0',
             'deadline'    => 'nullable|date',
         ]);
 
-        Project::create($validated);
+        // Sanitasi input teks & gunakan ID user yang sedang login
+        Project::create([
+            'user_id'     => Auth::id(),
+            'title'       => strip_tags($validated['title']),
+            'description' => strip_tags($validated['description']),
+            'budget'      => $validated['budget'],
+            'deadline'    => $validated['deadline'] ?? null,
+        ]);
 
         return redirect()->route('projects.index')
             ->with('success', 'Proyek berhasil dipublikasikan!');
@@ -43,11 +44,7 @@ class ProjectController extends Controller
     public function show(Project $project)
     {
         $project->load(['user', 'bids.user']);
-        $freelancers = User::where('role', 'freelancer')->get();
-        if ($freelancers->isEmpty()) {
-            $freelancers = User::all();
-        }
-        return view('projects.show', compact('project', 'freelancers'));
+        return view('projects.show', compact('project'));
     }
 
     public function edit(Project $project)
@@ -65,7 +62,13 @@ class ProjectController extends Controller
             'status'      => 'required|in:open,in_progress,completed,closed',
         ]);
 
-        $project->update($validated);
+        $project->update([
+            'title'       => strip_tags($validated['title']),
+            'description' => strip_tags($validated['description']),
+            'budget'      => $validated['budget'],
+            'deadline'    => $validated['deadline'] ?? null,
+            'status'      => $validated['status'],
+        ]);
 
         return redirect()->route('projects.show', $project)
             ->with('success', 'Data proyek berhasil diperbarui!');

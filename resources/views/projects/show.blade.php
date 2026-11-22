@@ -61,12 +61,8 @@
                 <form action="{{ route('bids.store', $project) }}" method="POST">
                     @csrf
                     <div class="mb-3">
-                        <label class="form-label">Nama Freelancer</label>
-                        <select name="user_id" class="form-select" required>
-                            @foreach($freelancers as $freelancer)
-                                <option value="{{ $freelancer->id }}">{{ $freelancer->name }}</option>
-                            @endforeach
-                        </select>
+                        <label class="form-label">Pengaju Penawaran</label>
+                        <input type="text" class="form-control bg-light" value="{{ Auth::user()->name }}" readonly>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Nominal Penawaran (Rp)</label>

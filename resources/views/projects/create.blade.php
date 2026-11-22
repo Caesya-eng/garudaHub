@@ -9,12 +9,8 @@
         <form action="{{ route('projects.store') }}" method="POST">
             @csrf
             <div class="mb-3">
-                <label class="form-label">Pemilik Proyek (Client)</label>
-                <select name="user_id" class="form-select" required>
-                    @foreach($clients as $client)
-                        <option value="{{ $client->id }}">{{ $client->name }} ({{ $client->email }})</option>
-                    @endforeach
-                </select>
+                <label class="form-label">Pemilik Proyek</label>
+                <input type="text" class="form-control bg-light" value="{{ Auth::user()->name }}" readonly>
             </div>
             <div class="mb-3">
                 <label class="form-label">Judul Proyek</label>
