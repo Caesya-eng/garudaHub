@@ -17,13 +17,17 @@ class Project extends Model
         'status',
     ];
 
-    // Satu proyek dimiliki oleh satu user (client)
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    // Satu proyek bisa menerima banyak penawaran (bids)
+   
     public function bids(): HasMany
     {
         return $this->hasMany(Bid::class);

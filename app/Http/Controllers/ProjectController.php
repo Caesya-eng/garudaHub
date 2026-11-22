@@ -28,7 +28,6 @@ class ProjectController extends Controller
             'deadline'    => 'nullable|date',
         ]);
 
-        // Sanitasi input teks & gunakan ID user yang sedang login
         Project::create([
             'user_id'     => Auth::id(),
             'title'       => strip_tags($validated['title']),
@@ -43,7 +42,7 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
-        $project->load(['user', 'bids.user']);
+        $project->load(['user', 'bids.user', 'ratings.user']);
         return view('projects.show', compact('project'));
     }
 
